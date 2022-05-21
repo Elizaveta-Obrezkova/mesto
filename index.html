@@ -17,9 +17,9 @@
             <div class="profile-info">
                 <h1 class="profile-owner">Елизавета Обрезкова</h1>
                 <p class="profile-info__about-owner">Искатель приключений</p>
-                <button class="edit-button"></button>
+                <button type="button" class="edit-button"></button>
             </div>
-            <button class="add-button"></button>
+            <button type="button" class="add-button"></button>
         </section>
         <section class="elements page__elements">
             <div class="element">
@@ -27,7 +27,7 @@
                     alt="Хогвартс-Экспресс идущий через леса Карелии.">
                 <div class="element__caption">
                     <h2 class="element__title">Республика Карелия</h2>
-                    <button class="button-like"></button>
+                    <button type="button" class="button-like"></button>
                 </div>
             </div>
             <div class="element">
@@ -35,7 +35,7 @@
                     alt="Станция метро Савёловская, оформленная в стилле лофт.">
                 <div class="element__caption">
                     <h2 class="element__title">Москва. Савёловская</h2>
-                    <button class="button-like"></button>
+                    <button type="button" class="button-like"></button>
                 </div>
             </div>
             <div class="element">
@@ -43,21 +43,21 @@
                     alt="Самое старейшее кафе Санкт-Петербурга, где подают пышки.">
                 <div class="element__caption">
                     <h2 class="element__title">Санкт-Петербург</h2>
-                    <button class="button-like"></button>
+                    <button type="button" class="button-like"></button>
                 </div>
             </div>
             <div class="element">
                 <img src="./Images/sulak-canyon.jpg" class="element__photo" alt="Самый глубокий каньон Европы.">
                 <div class="element__caption">
                     <h2 class="element__title">Сулакский каньон</h2>
-                    <button class="button-like"></button>
+                    <button type="button" class="button-like"></button>
                 </div>
             </div>
             <div class="element">
                 <img src="./Images/Tarhovka.jpg" class="element__photo" alt="Курортный район Санкт-Петербурга.">
                 <div class="element__caption">
                     <h2 class="element__title">Тарховка</h2>
-                    <button class="button-like"></button>
+                    <button type="button" class="button-like"></button>
                 </div>
             </div>
             <div class="element">
@@ -65,7 +65,7 @@
                     alt="Пляжный курорт на побережье Балтийского моря.">
                 <div class="element__caption">
                     <h2 class="element__title">Зеленоградск</h2>
-                    <button class="button-like"></button>
+                    <button type="button" class="button-like"></button>
                 </div>
             </div>
         </section>
@@ -75,15 +75,15 @@
     </footer>
     <div class="popup">
         <div class="popup__container">
-            <button class="popup__close"></button>
-            <h3 class="popup__title">Редактировать профиль</h3>
-            <form class="popup__form">
-                <input type="text" class="popup__input popup__input_name_owner">
-                <input type="text" class="popup__input popup__input_name_about-owner">
+            <button type="button" class="popup__close"></button>
+            <h2 class="popup__title">Редактировать профиль</h2>
+            <form name="edit-form" action="*" method="get" class="popup__form">
+                <input name="edit-nameOwner" type="text" class="popup__input popup__input_name_owner">
+                <input name="edit-aboutOwner" type="text" class="popup__input popup__input_name_about-owner">
                 <button type="submit" class="popup__button">Сохранить</button>
             </form>
         </div>
     </div>
-    <script src="./index.js"></script>
+    <script src="./scripts/index.js"></script>
 </body>
 </html>

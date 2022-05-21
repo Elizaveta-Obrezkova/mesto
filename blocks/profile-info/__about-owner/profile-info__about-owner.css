@@ -25,6 +25,7 @@
     .profile-info__about-owner {
         font-size: 14px;
         line-height: 1.2143;
+        max-width: 431px;
     }
 }
 

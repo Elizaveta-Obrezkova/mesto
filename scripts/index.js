@@ -7,27 +7,25 @@ const InputOwner = popup.querySelector('.popup__input_name_owner');
 const InputAboutOwner = popup.querySelector('.popup__input_name_about-owner');
 const formPopup = popup.querySelector('.popup__form') 
 
-function popupOpen(popupElement){
-    popupElement.classList.add('popup_opened')
+function popupOpen(){
+    popup.classList.add('popup_opened')
     InputOwner.value = owner.textContent;
     InputAboutOwner.value = aboutOwner.textContent; 
 }
 
-function popupClose(popupElement) {
-    popupElement.classList.remove('popup_opened')
+function popupClose() {
+    popup.classList.remove('popup_opened')
 }
 
-editButton.addEventListener('click', function(){
-    popupOpen(popup)
-});
-
-closePopup.addEventListener('click', function() {
-    popupClose(popup)
-});
-
-formPopup.addEventListener('submit', function(event){
-    event.preventDefault()
+function popupSave (evt) {
+    evt.preventDefault()
     owner.textContent = InputOwner.value;
     aboutOwner.textContent = InputAboutOwner.value;
-    popupClose(popup)
-});
+    popupClose()
+}
+
+editButton.addEventListener('click', popupOpen);
+
+closePopup.addEventListener('click', popupClose);
+
+formPopup.addEventListener ('submit', popupSave);
