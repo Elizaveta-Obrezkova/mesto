@@ -1,98 +1,65 @@
-// Открыть попап
-const editButton = document.querySelector('.edit-button');
-const popup = document.querySelectorAll('.popup');
-const popupArray = Array.from(popup);
-const addButton = document.querySelector('.add-button');
+// Объявляем переменные
+const editProfileButton = document.querySelector('.edit-button');
+const popupEditProfile = document.querySelector('.popup_type_edit')
+const popupAddCard = document.querySelector('.popup_type_add')
+const popupSeeCard = document.querySelector('.popup_type_see-photo')
+const addCardButton = document.querySelector('.add-button');
+const formEditProfilePopup = document.querySelector('.popup__form_type_edit')
+const owner = document.querySelector('.profile-owner');
+const aboutOwner = document.querySelector('.profile-info__about-owner');
+const inputOwner = document.querySelector('.popup__input_name_owner');
+const inputAboutOwner = document.querySelector('.popup__input_name_about-owner');
+const cardsContainer = document.querySelector('.elements')
+const seePhotoImage = document.querySelector('.photo-card__images');
+const imagesTitle = document.querySelector('.photo-card__title');
+const formAddCardPopup = document.querySelector('.popup__form_type_add');
+const src = document.querySelector('.popup__input_name_photo-place');
+const title = document.querySelector('.popup__input_name_title-place');
+const closePopupButtons = document.querySelectorAll('.popup__close');
+const placeTemplate = document.querySelector('#element-template').content;
 
+
+// Открыть попап
 
 function openPopup(item) {
     item.classList.add('popup_opened')
-    InputOwner.value = owner.textContent;
-    InputAboutOwner.value = aboutOwner.textContent;
-
-    const closePopup = item.querySelector('.popup__close');
-    closePopup.addEventListener('click', function (evt) {
-        evt.target.closest('.popup').classList.remove('popup_opened');
-        src.value = '';
-        title.value = '';
-    });
 }
-
-editButton.addEventListener('click', function () {
-    openPopup(popupArray.find(function (item) {
-        return item.classList.contains('popup_type_edit')
-    }));
-});
-
-addButton.addEventListener('click', function () {
-    openPopup(popupArray.find(function (item) {
-        return item.classList.contains('popup_type_add')
-    }));
-});
 
 // Сохранить попап "Редактировать профиль"
 
-const formEditPopup = document.querySelector('.popup__form_type_edit')
-const owner = document.querySelector('.profile-owner');
-const aboutOwner = document.querySelector('.profile-info__about-owner');
-const InputOwner = document.querySelector('.popup__input_name_owner');
-const InputAboutOwner = document.querySelector('.popup__input_name_about-owner');
 
-function popupSaveEdit(evt) {
+function saveEditProfilepopup(evt) {
     evt.preventDefault()
-    owner.textContent = InputOwner.value;
-    aboutOwner.textContent = InputAboutOwner.value;
-    popupClose(popupArray.find(function (item) {
-        return item.classList.contains('popup_type_edit')
-
-    }));
+    owner.textContent = inputOwner.value;
+    aboutOwner.textContent = inputAboutOwner.value;
+    closePopup(popupEditProfile);
 };
-
-formEditPopup.addEventListener('submit', popupSaveEdit);
 
 // Закрыть попап
 
-function popupClose(item) {
+function closePopup(item) {
     item.classList.remove('popup_opened');
 };
 
-// Действия с карточками на странице (добавить, лайкнуть, удалить)
-const placeContainer = document.querySelector('.elements')
-const Images = document.querySelector('.photo-card__images');
-const ImagesTitle = document.querySelector('.photo-card__title');
-const initialCards = [
-    {
-        name: 'Зеленоградск',
-        link: 'https://images.unsplash.com/photo-1627912878381-7604c488054b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'
-    },
-    {
-        name: 'Тарховка',
-        link: 'https://images.unsplash.com/photo-1590079020499-832a755ee71e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80'
-    },
-    {
-        name: 'Сулакский каньон',
-        link: 'https://images.unsplash.com/photo-1598535222392-28363ab684fe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'
-    },
-    {
-        name: 'Санкт-Петербург',
-        link: 'https://images.unsplash.com/photo-1628664508562-59d557172257?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'
-    },
-    {
-        name: 'Москва. Савёловская',
-        link: 'https://images.unsplash.com/photo-1628227361602-eedff53b595a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'
-    },
-    {
-        name: 'Республика Карелия',
-        link: 'https://images.unsplash.com/photo-1590079019458-0eb5b40a3371?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'
+function closePopupClick(evt) {
+    closePopup(evt.target.closest('.popup'));
+    if (evt.target.closest('.popup').classList.contains('popup_type_add') === true) {
+    formAddCardPopup.reset();
     }
-];
+};
 
-function addPlace(srcValue, titleValue) {
-    const placeTemplate = document.querySelector('#element-template').content;
+closePopupButtons.forEach(button => {
+    button.addEventListener('click', closePopupClick);
+
+});
+
+// Действия с карточками на странице (добавить, лайкнуть, удалить)
+
+function addPlace(card) {
     const placeElement = placeTemplate.querySelector('.element').cloneNode(true)
 
-    placeElement.querySelector('.element__photo').src = srcValue;
-    placeElement.querySelector('.element__title').textContent = titleValue;
+    placeElement.querySelector('.element__photo').src = card.link;
+    placeElement.querySelector('.element__title').textContent = card.name;
 
     const likeButton = placeElement.querySelector('.button-like')
     likeButton.addEventListener('click', function (evt) {
@@ -101,20 +68,12 @@ function addPlace(srcValue, titleValue) {
 
     const photo = placeElement.querySelector('.element__photo')
     photo.addEventListener('click', function (evt) {
-        const ImagesSrc = evt.target.src;
-        const TitleCard = evt.target.closest('.element').querySelector('.element__title').textContent;
-        const popupPhoto = document.querySelector('.popup_type_see-photo');
-        popupPhoto.classList.add('popup_opened');
-
-        Images.src = ImagesSrc;
-        ImagesTitle.textContent = TitleCard;
-
-        const closePopup = popupPhoto.querySelector('.popup__close');
-        closePopup.addEventListener('click', function (evt) {
-            evt.target.closest('.popup').classList.remove('popup_opened');
-        });
+        const imagesSrc = evt.target.src;
+        const titleCard = evt.target.closest('.element').querySelector('.element__title').textContent;
+        openPopup (popupSeeCard)
+        seePhotoImage.src = imagesSrc;
+        imagesTitle.textContent = titleCard;
     });
-
 
     const DeleteButton = placeElement.querySelector('.button-delete')
     DeleteButton.addEventListener('click', function (evt) {
@@ -122,31 +81,43 @@ function addPlace(srcValue, titleValue) {
         card.remove();
     });
 
-    placeContainer.prepend(placeElement);
-
-    popupClose(popupArray.find(function (item) {
-        return item.classList.contains('popup_type_add')
-    }));
+    return placeElement;
 }
 
-initialCards.forEach(function (item) {
-    addPlace(item.link, item.name);
-})
 
 // Сохранить "Новое место"
 
-const formAddPopup = document.querySelector('.popup__form_type_add');
-const src = document.querySelector('.popup__input_name_photo-place');
-const title = document.querySelector('.popup__input_name_title-place');
 
-function SaveAddPlace(evt) {
+function saveAddPlace(evt) {
     evt.preventDefault()
-
-    addPlace(src.value, title.value);
+    const card = {};
+    card.link = src.value;
+    card.name = title.value;
+    const cardElement = addPlace(card);
+    cardsContainer.prepend(cardElement);
+    closePopup(popupAddCard);
 
     src.value = '';
     title.value = '';
 }
 
-formAddPopup.addEventListener('submit', SaveAddPlace);
+
+editProfileButton.addEventListener('click', function () {
+    inputOwner.value = owner.textContent;
+    inputAboutOwner.value = aboutOwner.textContent;
+    openPopup(popupEditProfile);
+});
+
+addCardButton.addEventListener('click', function () {
+    openPopup(popupAddCard);
+});
+
+formEditProfilePopup.addEventListener('submit', saveEditProfilepopup);
+
+initialCards.forEach((card) => {
+const cardElement = addPlace(card)
+cardsContainer.prepend(cardElement);
+});
+
+formAddCardPopup.addEventListener('submit', saveAddPlace);
 
