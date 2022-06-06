@@ -28,7 +28,7 @@ function openPopup(item) {
 // Сохранить попап "Редактировать профиль"
 
 
-function saveEditProfilepopup(evt) {
+function saveEditProfilePopup(evt) {
     evt.preventDefault()
     owner.textContent = inputOwner.value;
     aboutOwner.textContent = inputAboutOwner.value;
@@ -43,9 +43,6 @@ function closePopup(item) {
 
 function closePopupClick(evt) {
     closePopup(evt.target.closest('.popup'));
-    if (evt.target.closest('.popup').classList.contains('popup_type_add') === true) {
-    formAddCardPopup.reset();
-    }
 };
 
 closePopupButtons.forEach(button => {
@@ -53,9 +50,9 @@ closePopupButtons.forEach(button => {
 
 });
 
-// Действия с карточками на странице (добавить, лайкнуть, удалить)
+// Создать карточку на странице
 
-function addPlace(card) {
+function createCard(card) {
     const placeElement = placeTemplate.querySelector('.element').cloneNode(true)
 
     placeElement.querySelector('.element__photo').src = card.link;
@@ -75,8 +72,8 @@ function addPlace(card) {
         imagesTitle.textContent = titleCard;
     });
 
-    const DeleteButton = placeElement.querySelector('.button-delete')
-    DeleteButton.addEventListener('click', function (evt) {
+    const deleteButton = placeElement.querySelector('.button-delete')
+    deleteButton.addEventListener('click', function (evt) {
         const card = evt.target.closest('.element');
         card.remove();
     });
@@ -84,21 +81,21 @@ function addPlace(card) {
     return placeElement;
 }
 
+//Добавить карточку на страницу
+
+function renderPlace (card) {
+    const cardElement = createCard(card);
+    cardsContainer.prepend(cardElement);
+}
 
 // Сохранить "Новое место"
 
 
 function saveAddPlace(evt) {
     evt.preventDefault()
-    const card = {};
-    card.link = src.value;
-    card.name = title.value;
-    const cardElement = addPlace(card);
-    cardsContainer.prepend(cardElement);
+    const card = {link: src.value, name:title.value };
+    renderPlace(card);
     closePopup(popupAddCard);
-
-    src.value = '';
-    title.value = '';
 }
 
 
@@ -110,14 +107,12 @@ editProfileButton.addEventListener('click', function () {
 
 addCardButton.addEventListener('click', function () {
     openPopup(popupAddCard);
+    formAddCardPopup.reset();
 });
 
-formEditProfilePopup.addEventListener('submit', saveEditProfilepopup);
+formEditProfilePopup.addEventListener('submit', saveEditProfilePopup);
 
-initialCards.forEach((card) => {
-const cardElement = addPlace(card)
-cardsContainer.prepend(cardElement);
-});
+initialCards.forEach(renderPlace);
 
 formAddCardPopup.addEventListener('submit', saveAddPlace);
 
