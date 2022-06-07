@@ -83,9 +83,8 @@ function createCard(card) {
 
 //Добавить карточку на страницу
 
-function renderPlace (card) {
-    const cardElement = createCard(card);
-    cardsContainer.prepend(cardElement);
+function renderPlace (Element) {
+    cardsContainer.prepend(Element);
 }
 
 // Сохранить "Новое место"
@@ -94,7 +93,8 @@ function renderPlace (card) {
 function saveAddPlace(evt) {
     evt.preventDefault()
     const card = {link: src.value, name:title.value };
-    renderPlace(card);
+    const cardElement = createCard(card);
+    renderPlace(cardElement);
     closePopup(popupAddCard);
 }
 
@@ -112,7 +112,10 @@ addCardButton.addEventListener('click', function () {
 
 formEditProfilePopup.addEventListener('submit', saveEditProfilePopup);
 
-initialCards.forEach(renderPlace);
+initialCards.forEach((card) => {
+    const cardElement = createCard(card)
+    renderPlace(cardElement);
+    });
 
 formAddCardPopup.addEventListener('submit', saveAddPlace);
 
