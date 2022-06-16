@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./pages/index.css">
     <script defer src="./scripts/cards.js"></script>
     <script defer src="./scripts/index.js"></script>
+    <script defer src="./scripts/validate.js"></script>
 </head>
 
 <body class="page">
@@ -36,10 +37,16 @@
         <div class="popup__container">
             <button type="button" class="popup__close" aria-label="Закрыть."></button>
             <h2 class="popup__title">Редактировать профиль</h2>
-            <form name="edit-form" class="popup__form popup__form_type_edit">
-                <input name="edit-name-owner" type="text" class="popup__input popup__input_name_owner" required>
-                <input name="edit-about-owner" type="text" class="popup__input popup__input_name_about-owner" required>
-                <button type="submit" class="popup__button popup__button">Сохранить</button>
+            <form name="edit-form" class="popup__form popup__form_type_edit" novalidate>
+                <div class="input-container">
+                    <input id="name-owner" name="edit-name-owner" type="text" class="popup__input popup__input_name_owner" required minlength="2" maxlength="40">
+                    <span id="error-name-owner" class="error-message"></span>
+                </div>
+                <div class="input-container">
+                    <input id="about-owner" name="edit-about-owner" type="text" class="popup__input popup__input_name_about-owner" required minlength="2" maxlength="200">
+                    <span id="error-about-owner" class="error-message"></span>
+                </div>
+                <button type="submit" class="popup__button">Сохранить</button>
             </form>
         </div>
     </div>
@@ -48,9 +55,15 @@
         <div class="popup__container">
             <button type="button" class="popup__close" aria-label="Закрыть."></button>
             <h2 class="popup__title">Новое место</h2>
-            <form name="add-form" class="popup__form popup__form_type_add">
-                <input name="add-title-place" type="text" class="popup__input popup__input_name_title-place" placeholder="Название" required>
-                <input name="add-photo-place" type="url" class="popup__input popup__input_name_photo-place" placeholder="Ссылка на картинку" required>
+            <form name="add-form" class="popup__form popup__form_type_add" novalidate>
+                <div class="input-container">
+                    <input id="title-place" name="add-title-place" type="text" class="popup__input popup__input_name_title-place" placeholder="Название" required minlength="2" maxlength="30">
+                    <span id="error-title-place" class="error-message"></span>
+                </div>
+                <div class="input-container">
+                    <input id="photo-place" name="add-photo-place" type="url" class="popup__input popup__input_name_photo-place" placeholder="Ссылка на картинку" required>
+                    <span id="error-photo-place" class="error-message"></span>
+                </div>
                 <button type="submit" class="popup__button">Создать</button>
             </form>
         </div>
@@ -75,7 +88,7 @@
             <button type="button" class="button-delete" aria-label="Удалить."></button>
         </div >
     </template>
-
+    
 </body>
 
 </html>

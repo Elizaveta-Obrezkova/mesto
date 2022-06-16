@@ -1,9 +1,10 @@
-.popup__input {
+.error-message {
     width: 100%;
+    min-height: 15px;
+    display: inline-block;
     border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    margin: 13px 0 0;
-    padding: 0 0 9px;
+    margin: 0;
+    padding: 2px 0 0;
     font-family: 'Inter', Arial, sans-serif;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
@@ -12,7 +13,7 @@
     -moz-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
     font-weight: 400;
-    font-size: 14px;
-    line-height: 1.2143;
-    color: #000;
+    font-size: 12px;
+    line-height: 1.25;
+    color: #F00;
 }
