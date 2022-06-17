@@ -24,7 +24,7 @@ const placeTemplate = document.querySelector('#element-template').content;
 
 function openPopup(item) {
     item.classList.add('popup_opened');
-    document.addEventListener('click', closePopupOverlay);
+    document.addEventListener('mousedown', closePopupOverlay);
     document.addEventListener('keyup', closePopupEsc);
 }
 
@@ -42,6 +42,8 @@ function saveEditProfilePopup(evt) {
 
 function closePopup(item) {
     item.classList.remove('popup_opened');
+    document.removeEventListener('mousedowm', closePopupOverlay);
+    document.removeEventListener('keyup', closePopupEsc);
 };
 
 function closePopupClick(evt) {
@@ -55,14 +57,12 @@ closePopupButtons.forEach(button => {
 function closePopupOverlay(evt) {
     if (evt.target.classList.contains('popup') && !evt.target.classList.contains('popup__container')) {
         closePopupClick(evt);
-        document.removeEventListener('click', closePopupOverlay);
     }
 };
 
 function closePopupEsc(evt) {
     if (evt.key === 'Escape') {
         closePopup(document.querySelector('.popup_opened'));
-        document.removeEventListener('keyup', closePopupEsc);
     }
 };
 
@@ -70,38 +70,31 @@ function closePopupEsc(evt) {
 
 function createCard(card) {
     const placeElement = placeTemplate.querySelector('.element').cloneNode(true)
-
-    placeElement.querySelector('.element__photo').src = card.link;
-    placeElement.querySelector('.element__title').textContent = card.name;
-    placeElement.querySelector('.element__photo').alt = card.name;
-
     const photo = placeElement.querySelector('.element__photo')
-    photo.addEventListener('click', function (evt) {
-        const imagesSrc = evt.target.src;
-        const titleCard = evt.target.closest('.element').querySelector('.element__title').textContent;
+    photo.src = card.link;
+    placeElement.querySelector('.element__title').textContent = card.name;
+    photo.alt = card.name;
+    
+    const likeButton = placeElement.querySelector('.button-like')
+    likeButton.addEventListener('click', function (evt) {
+        evt.target.classList.toggle('button-like_active');
+    });
+
+    photo.addEventListener('click', function () {
         openPopup (popupSeeCard)
-        seePhotoImage.src = imagesSrc;
-        imagesTitle.textContent = titleCard;
+        seePhotoImage.src = card.link;
+        imagesTitle.textContent = card.name;
+        seePhotoImage.alt = card.name;
+    });
+
+    const deleteButton = placeElement.querySelector('.button-delete')
+    deleteButton.addEventListener('click', function (evt) {
+        const card = evt.target.closest('.element');
+        card.remove();
     });
     
     return placeElement;
 }
-
-// Лайкнуть фото
-
-cardsContainer.addEventListener('click', function(evt) {
-    if (evt.target.classList.contains('button-like')) {
-   evt.target.classList.toggle('button-like_active'); 
-    }
-  })
-
-// Удалить фото
-
-cardsContainer.addEventListener('click', function(evt) {
-    if (evt.target.classList.contains('button-delete')) {
-        evt.target.closest('.element').remove();
-    }
-  })
 
 //Добавить карточку на страницу
 
@@ -116,36 +109,32 @@ function saveAddPlace(evt) {
     evt.preventDefault()
     const card = {link: src.value, name:title.value};
     const cardElement = createCard(card);
+    const buttonAddPlace = popupAddCard.querySelector('.popup__button');
     renderPlace(cardElement);
+    formAddCardPopup.reset();
     closePopup(popupAddCard);
+    isPopupButtonInactive(buttonAddPlace, settings);
 }
 
 
 editProfileButton.addEventListener('click', function () {
     inputOwner.value = owner.textContent;
     inputAboutOwner.value = aboutOwner.textContent;
+    const buttonEditProfile = popupEditProfile.querySelector('.popup__button');
     openPopup(popupEditProfile);
+    isPopupButtonActive(buttonEditProfile, settings);
 });
 
 addCardButton.addEventListener('click', function () {
     openPopup(popupAddCard);
-    formAddCardPopup.reset();
 });
 
-formEditProfilePopup.addEventListener('submit', function (evt) {
-    if (!hasInvalidInput(Array.from(formEditProfilePopup.querySelectorAll('.popup__input')))) {
-        saveEditProfilePopup(evt);
-    };
-});
+formEditProfilePopup.addEventListener('submit', saveEditProfilePopup);
 
 initialCards.forEach((card) => {
     const cardElement = createCard(card)
     renderPlace(cardElement);
     });
 
-formAddCardPopup.addEventListener('submit', function (evt) {
-    if (!hasInvalidInput(Array.from(formAddCardPopup.querySelectorAll('.popup__input')))) {
-        saveAddPlace(evt);
-    };
-});
+formAddCardPopup.addEventListener('submit', saveAddPlace);
 
