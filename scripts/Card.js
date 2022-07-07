@@ -1,22 +1,10 @@
-import {openPopup} from './index.js';
 
 export default class Card {
-    constructor(data, selector) {
+    constructor(data, selector, openPopupPlace) {
         this._name = data.name;
         this._link = data.link;
-        this._template = selector; 
-    }
-
-    _setEventListeners() {
-        this._element.querySelector('.button-like').addEventListener('click', () => {
-            this._likeCard();
-        });
-        this._element.querySelector('.button-delete').addEventListener('click', () => {
-            this._deleteCard();
-        });
-        this._element.querySelector('.element__photo').addEventListener('click', () => {
-            this._openPopup();
-        });
+        this._template = selector;
+        this._openPopupPlace = openPopupPlace;
     }
 
     _likeCard() {
@@ -27,16 +15,6 @@ export default class Card {
         this._element.closest('.element').remove();
     }
 
-    _openPopup() {
-        const popupSeeCard = document.querySelector('.popup_type_see-photo')
-        openPopup(popupSeeCard);
-        const seePhotoImage = document.querySelector('.photo-card__images');
-        const imagesTitle = document.querySelector('.photo-card__title');
-        seePhotoImage.src = this._link;
-        imagesTitle.textContent = this._name;
-        seePhotoImage.alt = this._name;
-    }
-
     _getTemplate() {
         const placeElement = document.querySelector(this._template).content.querySelector('.element').cloneNode(true);
         return placeElement;
@@ -44,12 +22,25 @@ export default class Card {
 
     createCard() {
         this._element = this._getTemplate();
+        this._photo =  this._element.querySelector('.element__photo');
         this._setEventListeners();
-        this._element.querySelector('.element__photo').src = this._link;
-        this._element.querySelector('.element__photo').alt = this._name;
+        this._photo.src = this._link;
+        this._photo.alt = this._name;
         this._element.querySelector('.element__title').textContent = this._name;
 
         return this._element;
     }
 
+    _setEventListeners() {
+        this._element.querySelector('.button-like').addEventListener('click', () => {
+            this._likeCard();
+        });
+        this._element.querySelector('.button-delete').addEventListener('click', () => {
+            this._deleteCard();
+        });
+        this._photo.addEventListener('click', () => {
+            this._openPopupPlace(this._name, this._link);
+        });
+    }
+    
 }

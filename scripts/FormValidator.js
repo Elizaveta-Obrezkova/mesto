@@ -4,16 +4,15 @@ class FormValidator {
     this._settings = settings;
     this._popupElement = popupElement;
     this._buttonElement = this._popupElement.querySelector('.popup__button');
+    this._inputList = Array.from(this._popupElement.querySelectorAll(this._settings.inputSelector));
   }
 
 _setEventListeners() {
-  const inputList = Array.from(this._popupElement.querySelectorAll(this._settings.inputSelector));
-  const buttonElement = this._popupElement.querySelector(this._settings.submitButtonSelector);
-  this._toggleButtonState(inputList);
-  inputList.forEach((inputElement) => {
+  this._toggleButtonState(this._inputList);
+  this._inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
       this._checkInputValidity(inputElement);
-      this._toggleButtonState(inputList);
+      this._toggleButtonState(this._inputList);
     });
   });
 };
@@ -40,39 +39,43 @@ errorElement.classList.remove(this._settings.errorClass);
 errorElement.textContent = '';
 };
 
-_hasInvalidInput(inputList) {
-  return inputList.some((inputElement) => {
+_hasInvalidInput() {
+  return this._inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   })
 };
 
-_isPopupButtonInactive() {
+isPopupButtonInactive() {
   this._buttonElement.classList.add(this._settings.inactiveButtonClass);
   this._buttonElement.setAttribute('disabled', true);
 }
 
-_isPopupButtonActive() {
+isPopupButtonActive() {
   this._buttonElement.classList.remove(this._settings.inactiveButtonClass);
   this._buttonElement.removeAttribute('disabled')
 }
 
 _toggleButtonState(inputList) {
-  if (this._hasInvalidInput(inputList)) {
-    this._isPopupButtonInactive();
+  if (this._hasInvalidInput()) {
+    this.isPopupButtonInactive();
   }
   else {
-    this._isPopupButtonActive()
+    this.isPopupButtonActive()
   }
 }
 
+resetValidation() {
+    this._inputList.forEach((inputElement) => {
+    this._hideInputError(inputElement)
+  });
+
+}
+
 enableValidation() {
-  const formList = Array.from(document.querySelectorAll(this._settings.formSelector));
-  formList.forEach((formElement) => {
-    formElement.addEventListener('submit', function (evt) {
+  this._popupElement.addEventListener('submit', function (evt) {
       evt.preventDefault();
     });
     this._setEventListeners();
-  });
 };
 
 }
