@@ -10,6 +10,7 @@ class FormValidator {
 _setEventListeners() {
   this._toggleButtonState(this._inputList);
   this._inputList.forEach((inputElement) => {
+    this._errorElement = this._popupElement.querySelector(`#error-${inputElement.id}`);
     inputElement.addEventListener('input', () => {
       this._checkInputValidity(inputElement);
       this._toggleButtonState(this._inputList);
@@ -26,17 +27,15 @@ _checkInputValidity(inputElement) {
 };
 
 _showInputError(inputElement, errorMessage) {
-const errorElement = this._popupElement.querySelector(`#error-${inputElement.id}`);
 inputElement.classList.add(this._settings.inputErrorClass);
-errorElement.textContent = errorMessage;
-errorElement.classList.add(this._settings.errorClass);
+this._errorElement.textContent = errorMessage;
+this._errorElement.classList.add(this._settings.errorClass);
 };
 
 _hideInputError(inputElement) {
-const errorElement = this._popupElement.querySelector(`#error-${inputElement.id}`);
 inputElement.classList.remove(this._settings.inputErrorClass);
-errorElement.classList.remove(this._settings.errorClass);
-errorElement.textContent = '';
+this._errorElement.classList.remove(this._settings.errorClass);
+this._errorElement.textContent = '';
 };
 
 _hasInvalidInput() {
