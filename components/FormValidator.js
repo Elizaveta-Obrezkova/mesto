@@ -28,6 +28,7 @@ _checkInputValidity(inputElement) {
 
 _showInputError(inputElement, errorMessage) {
 inputElement.classList.add(this._settings.inputErrorClass);
+this._errorElement = this._popupElement.querySelector(`#error-${inputElement.id}`);
 this._errorElement.textContent = errorMessage;
 this._errorElement.classList.add(this._settings.errorClass);
 };

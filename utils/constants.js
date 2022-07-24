@@ -1,3 +1,15 @@
+const editProfileButton = document.querySelector('.edit-button');
+const addCardButton = document.querySelector('.add-button');
+const inputOwner = document.querySelector('.popup__input_name_owner');
+const inputAboutOwner = document.querySelector('.popup__input_name_about-owner');
+const settings = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button',
+    inactiveButtonClass: 'popup__button_inactive',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'error-message_active'
+}
 const initialCards = [
     {
         name: 'Зеленоградск',
@@ -25,4 +37,4 @@ const initialCards = [
     }
 ];
 
-export {initialCards};
+export { editProfileButton, addCardButton, inputOwner, inputAboutOwner, settings, initialCards}

@@ -1,6 +1,6 @@
 
 export default class Card {
-    constructor(data, selector, openPopupPlace) {
+    constructor({data, selector, openPopupPlace}) {
         this._name = data.name;
         this._link = data.link;
         this._template = selector;
