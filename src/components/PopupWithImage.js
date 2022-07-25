@@ -8,7 +8,7 @@ export default class PopupWithImage extends Popup {
     }
 
     open(nameCard, link) {
-        this._popup.classList.add('popup_opened');
+        super.open();
         this._seePhotoImage.src = link;
         this._imagesTitle.textContent = nameCard;
         this._seePhotoImage.alt = nameCard;

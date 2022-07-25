@@ -73,14 +73,7 @@ const popupAddCard = new PopupWithForm({
         const item = {};
         item.name = values['add-title-place'];
         item.link = values['add-photo-place'];
-        const card = new Card({
-            data: item,
-            selector: '#element-template',
-            openPopupPlace: (name, link) => {
-                popupImage.open(name, link);
-            }
-        });
-        const placeElement = card.createCard();
+        const placeElement = createCard(item);
         cardList.addItem(placeElement);
         popupAddCard.close();
     }
