@@ -1,18 +1,34 @@
-
 export default class Card {
-    constructor({data, selector, openPopupPlace}) {
+    constructor({data, selector, openPopupPlace, openPopupDeleteCard, likeCard, deleteLike}) {
         this._name = data.name;
         this._link = data.link;
+        this._likes = data.likes;
+        this._cardId = data._id;
+        this._ownerId = data.owner._id;
         this._template = selector;
         this._openPopupPlace = openPopupPlace;
+        this._openPopupDeleteCard = openPopupDeleteCard;
+        this._likeCard = likeCard;
+        this._deleteLike = deleteLike;
     }
 
-    _likeCard() {
-        this._buttonLike.classList.toggle('button-like_active');
+    setUserInfo(id) {
+        console.log(id);
+        this._userProfileId = id;
     }
 
-    _deleteCard() {
-        this._element.closest('.element').remove();
+    _showTrash() {
+        if (`${this._ownerId}` != `${this._userProfileId}`)
+        {this._trash.remove();}
+    }
+
+    likeInfo(likes) {
+        this._element.querySelector('.element__like-counter').textContent = `${likes}`;
+    }
+
+    _showLike(id) {
+        if (this._likes.some(function (item) {return item._id === id}))
+        {this._buttonLike.classList.add('button-like_active');}
     }
 
     _getTemplate() {
@@ -26,19 +42,24 @@ export default class Card {
         this._photo.src = this._link;
         this._photo.alt = this._name;
         this._element.querySelector('.element__title').textContent = this._name;
-
+        this._showTrash();
+        this._showLike(this._userProfileId);
+        this.likeInfo(this._likes.length);
         return this._element;
     }
 
     _setEventListeners() {
         this._buttonLike = this._element.querySelector('.button-like');
         this._photo =  this._element.querySelector('.element__photo');
+        this._trash = this._element.querySelector('.button-delete');
 
         this._buttonLike.addEventListener('click', () => {
-            this._likeCard();
+            if(!this._buttonLike.classList.contains('button-like_active'))
+            {this._likeCard(this._cardId);}
+            else {this._deleteLike(this._cardId);}
         });
-        this._element.querySelector('.button-delete').addEventListener('click', () => {
-            this._deleteCard();
+        this._trash.addEventListener('click', () => {
+            this._openPopupDeleteCard(this._element, this._cardId);
         });
         this._photo.addEventListener('click', () => {
             this._openPopupPlace(this._name, this._link);

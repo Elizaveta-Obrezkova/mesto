@@ -15,16 +15,19 @@
     </header>
     <main class="content">
         <section class="profile page__profile">
-            <img src="<%=require('./Images/Avatar.jpg')%>" class="avatar" alt="Владелец профиля">
+            <div class="profile__avatar">
+                <img src="" class="avatar" alt="Владелец профиля">
+                <button type="button" class="edit-button edit-button_type_update-avatar" aria-label="Обновить аватар."></button>
+            </div>
             <div class="profile-info">
                 <h1 class="profile-owner">Елизавета Обрезкова</h1>
                 <p class="profile-info__about-owner">Искатель приключений</p>
-                <button type="button" class="edit-button" aria-label="Изменить данные профиля."></button>
+                <button type="button" class="edit-button edit-button_type_profile-info" aria-label="Изменить данные профиля."></button>
             </div>
             <button type="button" class="add-button" aria-label="Добавить фотографию."></button>
         </section>
         <section class="elements page__elements">
-    
+
         </section>
     </main>
     <footer class="footer page__footer">
@@ -36,11 +39,13 @@
             <h2 class="popup__title">Редактировать профиль</h2>
             <form name="edit-form" class="popup__form popup__form_type_edit" novalidate>
                 <div class="input-container">
-                    <input id="name-owner" name="edit-name-owner" type="text" class="popup__input popup__input_name_owner" required minlength="2" maxlength="40">
+                    <input id="name-owner" name="edit-name-owner" type="text"
+                        class="popup__input popup__input_name_owner" required minlength="2" maxlength="40">
                     <span id="error-name-owner" class="error-message"></span>
                 </div>
                 <div class="input-container">
-                    <input id="about-owner" name="edit-about-owner" type="text" class="popup__input popup__input_name_about-owner" required minlength="2" maxlength="200">
+                    <input id="about-owner" name="edit-about-owner" type="text"
+                        class="popup__input popup__input_name_about-owner" required minlength="2" maxlength="200">
                     <span id="error-about-owner" class="error-message"></span>
                 </div>
                 <button type="submit" class="popup__button">Сохранить</button>
@@ -54,11 +59,14 @@
             <h2 class="popup__title">Новое место</h2>
             <form name="add-form" class="popup__form popup__form_type_add" novalidate>
                 <div class="input-container">
-                    <input id="title-place" name="add-title-place" type="text" class="popup__input popup__input_name_title-place" placeholder="Название" required minlength="2" maxlength="30">
+                    <input id="title-place" name="add-title-place" type="text"
+                        class="popup__input popup__input_name_title-place" placeholder="Название" required minlength="2"
+                        maxlength="30">
                     <span id="error-title-place" class="error-message"></span>
                 </div>
                 <div class="input-container">
-                    <input id="photo-place" name="add-photo-place" type="url" class="popup__input popup__input_name_photo-place" placeholder="Ссылка на картинку" required>
+                    <input id="photo-place" name="add-photo-place" type="url"
+                        class="popup__input popup__input_name_photo-place" placeholder="Ссылка на картинку" required>
                     <span id="error-photo-place" class="error-message"></span>
                 </div>
                 <button type="submit" class="popup__button">Создать</button>
@@ -69,23 +77,50 @@
     <div class="popup popup_type_see-photo">
         <div class="photo-card">
             <button type="button" class="popup__close" aria-label="Закрыть."></button>
-            <img class="photo-card__images" >
+            <img class="photo-card__images">
             <h2 class="photo-card__title"></h2>
         </div>
     </div>
 
+    <div class="popup popup_type_delete-card">
+        <div class="popup__container popup__container_type_delete-card">
+            <button type="button" class="popup__close" aria-label="Закрыть."></button>
+            <h2 class="popup__title">Вы уверены?</h2>
+            <form name="delete-form" class="popup__form popup__form_type_delete-card">
+                <button type="submit" class="popup__button popup__button_type_delete-card">Да</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="popup popup_type_update-avatar">
+        <div class="popup__container popup__container_type_update-avatar">
+            <button type="button" class="popup__close" aria-label="Закрыть."></button>
+            <h2 class="popup__title">Обновить аватар</h2>
+            <form name="update-form" class="popup__form popup__form_type_update-avatar" novalidate>
+                <div class="input-container">
+                    <input id="photo-avatar" name="update-photo-avatar" type="url"
+                        class="popup__input popup__input_name_photo-avatar" placeholder="Ссылка на фотографию" required>
+                    <span id="error-photo-avatar" class="error-message"></span>
+                </div>
+                <button type="submit" class="popup__button">Сохранить</button>
+            </form>
+        </div>
+    </div>
 
     <template id="element-template">
         <div class="element">
             <img class="element__photo">
             <div class="element__caption">
                 <h2 class="element__title"></h2>
-                <button type="button" class="button-like" aria-label="Мне нравится."></button>
+                <div class="element__like">
+                    <button type="button" class="button-like" aria-label="Мне нравится."></button>
+                    <p class="element__like-counter">0</p>
+                </div>
             </div>
             <button type="button" class="button-delete" aria-label="Удалить."></button>
-        </div >
+        </div>
     </template>
-    
+
     <!-- <script type="module" src="./pages/index.js"></script> -->
 
 </body>

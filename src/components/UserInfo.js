@@ -1,7 +1,8 @@
 export default class UserInfo {
-    constructor({ownerSelector, aboutOwnerSelector}) {
+    constructor({ownerSelector, aboutOwnerSelector, avatarSelector}) {
         this._owner = document.querySelector(ownerSelector);
         this._aboutOwner = document.querySelector(aboutOwnerSelector);
+        this._avatar = document.querySelector(avatarSelector);
     }
 
     getUserInfo() {
@@ -12,8 +13,9 @@ export default class UserInfo {
     }
 
     setUserInfo(values) {
-        this._owner.textContent = values['edit-name-owner'];
-        this._aboutOwner.textContent = values['edit-about-owner'];
+        this._owner.textContent = values['name'];
+        this._aboutOwner.textContent = values['about'];
+        this._avatar.src = values['avatar'];
     }
 
 }
