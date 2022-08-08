@@ -9,13 +9,13 @@ export default class Popup {
     open () {
         this._popup.classList.add('popup_opened');
         document.addEventListener('keyup', this._handleEscClose);
-        document.addEventListener('mousedown', this._closePopupOverlay);
+        this._popup.addEventListener('mousedown', this._closePopupOverlay);
     }
 
     close() {
         this._popup.classList.remove('popup_opened');
         document.removeEventListener('keyup', this._handleEscClose);
-        document.removeEventListener('mousedown', this._closePopupOverlay);
+        this._popup.removeEventListener('mousedown', this._closePopupOverlay);
     }
 
     _handleEscClose (evt) {

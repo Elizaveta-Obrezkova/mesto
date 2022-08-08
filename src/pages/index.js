@@ -27,16 +27,22 @@ function createCard(item) {
         },
         likeCard: (cardId) => {
             api.likeCard(cardId)
-            .then((res) => { card.likeInfo(res.likes.length)});
-            card._buttonLike.classList.add('button-like_active');
+            .then((res) => { 
+                card.likeInfo(res.likes.length);
+                card.addLike();
+        })
+            .catch((err)=> {console.log(err);});
         },
         deleteLike: (cardId) => {
             api.deleteLike(cardId)
-            .then((res) => { card.likeInfo(res.likes.length)});
-            card._buttonLike.classList.remove('button-like_active');
+            .then((res) => { 
+                card.likeInfo(res.likes.length);
+                card.removeLike();
+        })
+            .catch((err)=> {console.log(err);});
         }
-    });
-    card.setUserInfo(userData.id)
+    }, userData.id
+    );
     const placeElement = card.createCard();
     return placeElement
 };
@@ -140,12 +146,14 @@ const popupDeleteCard = new PopupDeleteCard({
     submit: (card, id) => {
         popupDeleteCard.renderLoading(true);
         api.deleteCard(id)
+        .then(()=> {
+            card.remove();
+            popupDeleteCard.close();
+        })
         .catch((err)=>{
             console.log(err);
         })
         .finally(() => {popupDeleteCard.renderLoading(false);});
-        card.remove();
-        popupDeleteCard.close();
     }
 })
 
@@ -173,8 +181,7 @@ Promise.all([
 ])
 	.then(([items, values]) => {
         userData.id = values._id;
-		cardList.setItems(items);
-        cardList.renderItems();	
+        cardList.renderItems(items);	
         userInfo.setUserInfo(values);       
 	})
 	.catch((err)=>{

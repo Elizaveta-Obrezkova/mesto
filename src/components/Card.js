@@ -1,5 +1,5 @@
 export default class Card {
-    constructor({data, selector, openPopupPlace, openPopupDeleteCard, likeCard, deleteLike}) {
+    constructor({data, selector, openPopupPlace, openPopupDeleteCard, likeCard, deleteLike}, userProfileId) {
         this._name = data.name;
         this._link = data.link;
         this._likes = data.likes;
@@ -9,12 +9,8 @@ export default class Card {
         this._openPopupPlace = openPopupPlace;
         this._openPopupDeleteCard = openPopupDeleteCard;
         this._likeCard = likeCard;
-        this._deleteLike = deleteLike;
-    }
-
-    setUserInfo(id) {
-        console.log(id);
-        this._userProfileId = id;
+        this._deleteLike = deleteLike;  
+        this._userProfileId = userProfileId;
     }
 
     _showTrash() {
@@ -23,7 +19,15 @@ export default class Card {
     }
 
     likeInfo(likes) {
-        this._element.querySelector('.element__like-counter').textContent = `${likes}`;
+        this._likeInfo.textContent = `${likes}`;
+    }
+
+    addLike(){
+        this._buttonLike.classList.add('button-like_active');
+    }
+
+    removeLike() {
+        this._buttonLike.classList.remove('button-like_active');
     }
 
     _showLike(id) {
@@ -49,6 +53,7 @@ export default class Card {
     }
 
     _setEventListeners() {
+        this._likeInfo = this._element.querySelector('.element__like-counter');
         this._buttonLike = this._element.querySelector('.button-like');
         this._photo =  this._element.querySelector('.element__photo');
         this._trash = this._element.querySelector('.button-delete');

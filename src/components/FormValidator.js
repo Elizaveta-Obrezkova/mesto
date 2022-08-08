@@ -3,17 +3,17 @@ class FormValidator {
   constructor (settings, popupElement) {
     this._settings = settings;
     this._popupElement = popupElement;
-    this._buttonElement = this._popupElement.querySelector('.popup__button');
+    this._buttonElement = this._popupElement.querySelector(this._settings.submitButtonSelector);
     this._inputList = Array.from(this._popupElement.querySelectorAll(this._settings.inputSelector));
   }
 
 _setEventListeners() {
-  this._toggleButtonState(this._inputList);
+  this._toggleButtonState();
   this._inputList.forEach((inputElement) => {
     this._errorElement = this._popupElement.querySelector(`#error-${inputElement.id}`);
     inputElement.addEventListener('input', () => {
       this._checkInputValidity(inputElement);
-      this._toggleButtonState(this._inputList);
+      this._toggleButtonState();
     });
   });
 };
@@ -55,7 +55,7 @@ isPopupButtonActive() {
   this._buttonElement.removeAttribute('disabled')
 }
 
-_toggleButtonState(inputList) {
+_toggleButtonState() {
   if (this._hasInvalidInput()) {
     this.isPopupButtonInactive();
   }
@@ -72,9 +72,6 @@ resetValidation() {
 }
 
 enableValidation() {
-  this._popupElement.addEventListener('submit', function (evt) {
-      evt.preventDefault();
-    });
     this._setEventListeners();
 };
 

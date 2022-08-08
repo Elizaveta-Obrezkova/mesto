@@ -4,16 +4,12 @@ export default class Section {
         this._container = document.querySelector(containerSelector);
     }
 
-    setItems(items){
-        this._initialArray = items;
-    }
-
     addItem(element) {
         this._container.prepend(element);
     }
 
-    renderItems () {
-        this._initialArray.reverse().forEach(item => {
+    renderItems (items) {
+        items.reverse().forEach(item => {
             this._renderer(item); 
         });
 

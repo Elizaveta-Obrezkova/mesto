@@ -17,7 +17,7 @@ export default class PopupDeleteCard extends Popup {
     renderLoading(isLoading) {
         const textButton = this._submitButton.textContent;
         if (isLoading) {
-            this._submitButton.textContent = 'Сохранение...';
+            this._submitButton.textContent = 'Удаление...';
         }
         else {
             this._submitButton.textContent = this._text;
